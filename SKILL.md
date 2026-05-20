@@ -31,9 +31,8 @@ description: |
 > 3. **Gemini CLI** — Google 官方，Node.js，Google 账号登录（免费额度）
 > 4. **Aider** — Python，支持 100+ 语言，多模型
 > 5. **Crush** (原 OpenCode) — Go，Charmbracelet，多 LLM
-> 6. **Kiro CLI** (原 Amazon Q) — AWS 生态
-> 7. **CodeBuddy** — 自研/内部工具
-> 8. **其他** — 输入自定义 CLI 名称
+> 6. **CodeBuddy** — 自研/内部工具
+> 7. **其他** — 输入自定义 CLI 名称
 
 用户选择后，记录目标 CLI 名称，进入下一个门禁。
 
@@ -85,10 +84,8 @@ uname -s 2>/dev/null | grep -qiE 'MINGW|MSYS' && echo "Git Bash" || echo "Not Gi
 | Claude Code | `npm install -g @anthropic-ai/claude-code` | 首次运行引导登录，或设 `ANTHROPIC_API_KEY` |
 | Codex CLI | `npm install -g @openai/codex` | ChatGPT 账号登录，或设 `OPENAI_API_KEY` |
 | Gemini CLI | `npm install -g @google/gemini-cli` | Google 账号浏览器登录（免费 60 请求/分钟） |
-| OpenCode CLI | `npm install -g opencode-ai` | 设对应 LLM 提供商的 API Key |
-| Aider | `pip install aider-chat` | 设对应模型的 API Key |
 | Crush (原 OpenCode) | `npm install -g @charmland/crush` | 设对应 LLM 提供商的 API Key |
-| Kiro CLI (原 Amazon Q) | `brew install --cask amazon-q` | AWS Builder ID 登录 |
+| Aider | `pip install aider-chat` | 设对应模型的 API Key |
 | CodeBuddy | 按项目文档安装 | 按项目文档配置 |
 
 详细安装方法和参数说明见 `references/cli-patterns.md`。

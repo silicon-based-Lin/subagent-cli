@@ -289,7 +289,6 @@ subagent-cli/
 │   ├── claude-ctl.sh           # Claude Code wrapper
 │   ├── codex-ctl.sh            # Codex CLI wrapper
 │   ├── opencode-ctl.sh         # OpenCode wrapper
-│   ├── node-ctl.sh             # Node.js wrapper
 │   └── codebuddy-ctl.sh        # CodeBuddy wrapper
 ├── references/
 │   └── cli-patterns.md         # CLI install & usage reference

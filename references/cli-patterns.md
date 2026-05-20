@@ -1,5 +1,7 @@
 # 已知 Agent CLI 的安装与使用参考
 
+> 以下信息仅供快速参考，安装命令和参数可能随版本更新变化，请以各 CLI 官方文档为准。
+
 ---
 
 ## 1. Claude Code (`claude`)
@@ -281,39 +283,7 @@ scoop install crush
 
 ---
 
-## 7. Kiro CLI（原 Amazon Q CLI）(`kiro`)
-
-**来源**: Amazon/AWS（已迁移至 Kiro）
-**仓库**: https://github.com/kirodotdev/Kiro
-
-> ⚠️ Amazon Q Developer CLI 已停止维护，迁移至 Kiro CLI（闭源产品）。
-
-### 安装
-
-```bash
-# macOS: Homebrew
-brew install --cask amazon-q
-
-# macOS: DMG
-# 下载: https://desktop-release.q.us-east-1.amazonaws.com/latest/Amazon%20Q.dmg
-
-# Linux: Ubuntu/Debian
-# 参考: https://docs.aws.amazon.com/amazonq/latest/qdeveloper-ug/command-line-installing.html
-```
-
-### 登录认证
-
-- AWS Builder ID 登录
-- IAM Identity Center 登录
-
-### 封装建议
-
-- 已迁移至 Kiro CLI，建议确认最新安装方式
-- 主要面向 AWS 生态
-
----
-
-## 8. CodeBuddy CLI (`codeBuddy`)
+## 7. CodeBuddy CLI (`codeBuddy`)
 
 **来源**: 自研/内部工具
 
@@ -344,37 +314,3 @@ brew install --cask amazon-q
 - 默认禁用 Write/Edit/Bash，强制输出到 stdout
 - 结果在 JSON 输出的 `type=result` 块中
 - 支持 `--subagent-permission-mode` 控制子 Agent 权限
-
----
-
-## 通用封装模式
-
-所有 Agent CLI 的 wrapper 脚本应遵循统一接口：
-
-```bash
-#!/bin/bash
-# <cli>-ctl.sh - 标准化 wrapper
-
-case "$1" in
-  run)      # 执行任务，支持 --task-id, --bg, --allowed-tools, --permission-mode
-  status)   # 查询状态，支持 --task-id, --all
-  result)   # 获取结果，支持 --task-id
-  cancel)   # 取消任务，支持 --task-id
-  cleanup)  # 清理过期任务
-esac
-```
-
-### 统一输出格式
-
-所有命令输出 JSON：
-
-```json
-// 成功
-{"task_id":"t1","status":"completed","exit_code":0}
-
-// 失败
-{"error":"description","exit_code":1}
-
-// 结果
-{"task_id":"t1","exit_code":0,"result":"..."}
-```
