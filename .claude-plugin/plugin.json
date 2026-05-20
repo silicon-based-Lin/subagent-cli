@@ -1,11 +1,14 @@
 {
+  "$schema": "https://json.schemastore.org/claude-code-plugin-manifest.json",
   "name": "subagent-cli",
   "version": "1.0.0",
   "description": "将任意 Agent CLI 封装为主 Agent 的可复用 subAgent，支持并行派发",
   "author": {
-    "name": "silicon-based-Lin"
+    "name": "silicon-based-Lin",
+    "url": "https://github.com/silicon-based-Lin"
   },
-  "skills": [
-    "../SKILL.md"
-  ]
+  "homepage": "https://github.com/silicon-based-Lin/subagent-cli",
+  "repository": "https://github.com/silicon-based-Lin/subagent-cli",
+  "license": "MIT",
+  "keywords": ["agent", "subagent", "cli", "parallel", "orchestration"]
 }
