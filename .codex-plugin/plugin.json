@@ -1,7 +1,0 @@
-{
-  "name": "subagent-cli",
-  "version": "1.0.0",
-  "description": "将任意 Agent CLI 封装为主 Agent 的可复用 subAgent，支持并行派发",
-  "author": "silicon-based-Lin",
-  "skills": ["../SKILL.md"]
-}

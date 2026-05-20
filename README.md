@@ -103,23 +103,7 @@ Automatically registers the `/subagent-cli` slash command and skill triggers.
 </details>
 
 <details>
-<summary><b>Option 2: Codex CLI Plugin</b></summary>
-
-```bash
-# Via Codex TUI
-/plugins install subagent-cli
-
-# Or manually clone to .agents/skills/
-mkdir -p .agents/skills
-cp -r /path/to/subagent-cli .agents/skills/subagent-cli
-```
-
-Codex auto-discovers `SKILL.md`. The entire directory is copied as a unit — relative paths to `scripts/` and `references/` remain intact.
-
-</details>
-
-<details>
-<summary><b>Option 3: Claude Code Skill (manual)</b></summary>
+<summary><b>Option 2: Claude Code Skill (manual)</b></summary>
 
 ```bash
 mkdir -p .claude/skills
@@ -129,7 +113,7 @@ cp -r /path/to/subagent-cli .claude/skills/subagent-cli
 </details>
 
 <details>
-<summary><b>Option 4: Standalone script</b></summary>
+<summary><b>Option 3: Standalone script</b></summary>
 
 ```bash
 cp /path/to/subagent-cli/scripts/claude-ctl.sh ./

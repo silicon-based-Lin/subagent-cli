@@ -104,23 +104,7 @@ bash scripts/claude-ctl.sh cleanup
 </details>
 
 <details>
-<summary><b>方式二：Codex CLI 插件安装</b></summary>
-
-```bash
-# 在 Codex TUI 中
-/plugins install subagent-cli
-
-# 或手动克隆到 .agents/skills/
-mkdir -p .agents/skills
-cp -r /path/to/subagent-cli .agents/skills/subagent-cli
-```
-
-Codex 自动发现 `SKILL.md`。整个目录作为一个整体被复制，`scripts/` 和 `references/` 的相对路径保持不变。
-
-</details>
-
-<details>
-<summary><b>方式三：Claude Code 技能安装（手动）</b></summary>
+<summary><b>方式二：Claude Code 技能安装（手动）</b></summary>
 
 ```bash
 mkdir -p .claude/skills
@@ -130,7 +114,7 @@ cp -r /path/to/subagent-cli .claude/skills/subagent-cli
 </details>
 
 <details>
-<summary><b>方式四：单独复制脚本</b></summary>
+<summary><b>方式三：单独复制脚本</b></summary>
 
 ```bash
 cp /path/to/subagent-cli/scripts/claude-ctl.sh ./
