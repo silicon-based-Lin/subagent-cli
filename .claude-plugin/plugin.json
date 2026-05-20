@@ -6,9 +6,6 @@
     "name": "silicon-based-Lin"
   },
   "skills": [
-    {
-      "name": "subagent-cli",
-      "path": "../SKILL.md"
-    }
+    "../SKILL.md"
   ]
 }
