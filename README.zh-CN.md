@@ -104,22 +104,23 @@ bash scripts/claude-ctl.sh cleanup
 </details>
 
 <details>
-<summary><b>方式二：Claude Code 技能安装（手动）</b></summary>
+<summary><b>方式二：Git Clone（适用于任意 Agent CLI）</b></summary>
+
+克隆仓库并复制到目标 Agent CLI 的技能目录。以 Codex 为例：
 
 ```bash
-mkdir -p .claude/skills
-cp -r /path/to/subagent-cli .claude/skills/subagent-cli
+git clone https://github.com/silicon-based-Lin/subagent-cli.git /tmp/subagent-cli
+mkdir -p .agents/skills
+cp -r /tmp/subagent-cli .agents/skills/subagent-cli
+rm -rf /tmp/subagent-cli
 ```
 
-</details>
+其他 CLI 复制到对应目录：
 
-<details>
-<summary><b>方式三：单独复制脚本</b></summary>
-
-```bash
-cp /path/to/subagent-cli/scripts/claude-ctl.sh ./
-bash claude-ctl.sh run --task-id test --permission-mode acceptEdits -- "Hello"
-```
+| CLI | 技能目录 |
+|-----|---------|
+| Claude Code | `.claude/skills/` |
+| Codex | `.agents/skills/` |
 
 </details>
 

@@ -103,22 +103,23 @@ Automatically registers the `/subagent-cli` slash command and skill triggers.
 </details>
 
 <details>
-<summary><b>Option 2: Claude Code Skill (manual)</b></summary>
+<summary><b>Option 2: Git Clone (any Agent CLI)</b></summary>
+
+Clone the repo and copy to your Agent CLI's skills directory. Example with Codex:
 
 ```bash
-mkdir -p .claude/skills
-cp -r /path/to/subagent-cli .claude/skills/subagent-cli
+git clone https://github.com/silicon-based-Lin/subagent-cli.git /tmp/subagent-cli
+mkdir -p .agents/skills
+cp -r /tmp/subagent-cli .agents/skills/subagent-cli
+rm -rf /tmp/subagent-cli
 ```
 
-</details>
+For other CLIs, copy to the corresponding skills directory:
 
-<details>
-<summary><b>Option 3: Standalone script</b></summary>
-
-```bash
-cp /path/to/subagent-cli/scripts/claude-ctl.sh ./
-bash claude-ctl.sh run --task-id test --permission-mode acceptEdits -- "Hello"
-```
+| CLI | Skills directory |
+|-----|-----------------|
+| Claude Code | `.claude/skills/` |
+| Codex | `.agents/skills/` |
 
 </details>
 
