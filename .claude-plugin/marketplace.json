@@ -1,0 +1,23 @@
+{
+  "$schema": "https://code.claude.com/schemas/marketplace.json",
+  "name": "subagent-cli",
+  "description": "Wrap any Agent CLI as a reusable subAgent for your primary Agent, with parallel task dispatch.",
+  "owner": {
+    "name": "silicon-based-Lin"
+  },
+  "plugins": [
+    {
+      "name": "subagent-cli",
+      "source": "./",
+      "description": "将任意 Agent CLI 封装为主 Agent 的可复用 subAgent，支持并行派发",
+      "author": {
+        "name": "silicon-based-Lin"
+      },
+      "homepage": "https://github.com/silicon-based-Lin/subagent-cli",
+      "repository": "https://github.com/silicon-based-Lin/subagent-cli",
+      "license": "MIT",
+      "keywords": ["agent", "subagent", "cli", "parallel", "orchestration"],
+      "category": "productivity"
+    }
+  ]
+}
