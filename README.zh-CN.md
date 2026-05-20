@@ -13,12 +13,12 @@
 
 ## 这是什么？
 
-**一句话：让贵的 Agent 当老板，便宜的 Agent 干活。**
+**一句话：让贵的 Agent 当包工头，便宜的 Agent 干活。**
 
-| 角色 | 谁干 | 干什么 |
-|------|------|--------|
-| 老板 (Orchestrator) | Codex / Claude Code / 任意主 Agent | 理解需求、拆任务、验收结果 |
-| 打工人 (SubAgent) | Claude Code / DeepSeek / Codex / ... | 并行执行具体编码、测试、审查 |
+| 角色                 | 谁干                                   | 干什么            |
+| ------------------ | ------------------------------------ | -------------- |
+| 包工头 (Orchestrator) | Codex / Claude Code / 任意主 Agent      | 理解需求、拆任务、验收结果  |
+| 打工仔 (SubAgent)     | Claude Code / DeepSeek / Codex / ... | 并行执行具体编码、测试、审查 |
 
 ```
 ┌─────────────┐
@@ -44,21 +44,44 @@
 
 ---
 
-## 快速开始
+## 使用方式
+
+### 在 Agent CLI 中触发
+
+```
+# Claude Code 斜杠命令
+/subagent-cli
+
+# 自然语言（Claude Code / Codex 均可）
+"把 Codex CLI 作为 subAgent"
+"封装 OpenCode CLI"
+"用 3 个 Claude Code subAgent 并行写测试"
+```
+
+### 终端直接调用
 
 ```bash
-# 1. 检测 CLI 是否可用
-bash scripts/check_cli.sh claude
+# 同步执行（前台等待）
+bash scripts/claude-ctl.sh run --task-id t1 --permission-mode acceptEdits -- "列出当前目录文件"
 
-# 2. 跑一个简单任务
-bash scripts/claude-ctl.sh run --task-id test-1 --permission-mode acceptEdits -- "Reply with: OK"
+# 后台执行（立即返回）
+bash scripts/codex-ctl.sh run --task-id t2 --bg --sandbox workspace-write --skip-git-check -- "分析代码"
 
-# 3. 并行派发
-bash scripts/claude-ctl.sh run --task-id a1 --bg --permission-mode acceptEdits -- "任务 A" &
-bash scripts/codex-ctl.sh  run --task-id b1 --bg --sandbox workspace-write --skip-git-check -- "任务 B" &
-wait
-bash scripts/claude-ctl.sh result --task-id a1
-bash scripts/codex-ctl.sh  result --task-id b1
+# 查询状态 / 获取结果 / 取消 / 清理
+bash scripts/claude-ctl.sh status --task-id t1
+bash scripts/codex-ctl.sh result --task-id t2
+bash scripts/claude-ctl.sh cancel --task-id t1
+bash scripts/claude-ctl.sh cleanup
+```
+
+### 输出格式
+
+所有命令输出 JSON，便于程序解析：
+
+```json
+{"task_id":"t1","status":"completed","exit_code":0,"result":"Hello, World!"}
+{"task_id":"t1","status":"running","pid":1234,"mode":"background"}
+{"error":"connection_or_auth_failure","detail":"...","action":"Please check API Key..."}
 ```
 
 ---
@@ -118,11 +141,11 @@ bash claude-ctl.sh run --task-id test --permission-mode acceptEdits -- "Hello"
 
 ### 前置条件
 
-| 条件 | 说明 |
-|------|------|
-| Bash | 系统自带（Windows 需 Git Bash） |
+| 条件     | 说明                                         |
+| ------ | ------------------------------------------ |
+| Bash   | 系统自带（Windows 需 Git Bash）                   |
 | 目标 CLI | 已安装并完成登录认证（见 `references/cli-patterns.md`） |
-| Python | 结果提取使用 Python（仅 UTF-8 编码处理） |
+| Python | 结果提取使用 Python（仅 UTF-8 编码处理）                |
 
 ---
 
@@ -131,65 +154,16 @@ bash claude-ctl.sh run --task-id test --permission-mode acceptEdits -- "Hello"
 > [!CAUTION]
 > 所有 `*-ctl.sh` 脚本会在沙箱或绕过审批的模式下运行 Agent CLI。
 > subAgent 将拥有**文件读写和命令执行权限**，且无需人工确认。
->
+> 
 > **请勿在生产环境、含敏感数据的目录、或未经审查的 prompt 下运行。**
->
+> 
 > 风险：
+> 
 > - subAgent 可能执行非预期的文件操作
 > - subAgent 可能访问工作目录外的文件（取决于沙箱配置）
 > - 并行任务可能耗尽系统资源或 API 配额
->
+> 
 > **建议：始终在 Git 仓库中运行，以便通过 `git diff` 和 `git checkout` 回滚。**
-
----
-
-## 使用方式
-
-### 在 Agent CLI 中触发
-
-```
-# Claude Code 斜杠命令
-/subagent-cli
-
-# 自然语言（Claude Code / Codex 均可）
-"把 Codex CLI 作为 subAgent"
-"封装 OpenCode CLI"
-"用 3 个 Claude Code subAgent 并行写测试"
-```
-
-### 终端直接调用
-
-```bash
-# 同步执行（前台等待）
-bash scripts/claude-ctl.sh run --task-id t1 --permission-mode acceptEdits -- "列出当前目录文件"
-
-# 后台执行（立即返回）
-bash scripts/codex-ctl.sh run --task-id t2 --bg --sandbox workspace-write --skip-git-check -- "分析代码"
-
-# 查询状态 / 获取结果 / 取消 / 清理
-bash scripts/claude-ctl.sh status --task-id t1
-bash scripts/codex-ctl.sh result --task-id t2
-bash scripts/claude-ctl.sh cancel --task-id t1
-bash scripts/claude-ctl.sh cleanup
-```
-
-### 指定模型
-
-```bash
-bash scripts/claude-ctl.sh    run --task-id t1 --model claude-sonnet-4-6 --permission-mode acceptEdits -- "任务"
-bash scripts/codex-ctl.sh     run --task-id t2 --model o3 --sandbox workspace-write --skip-git-check -- "任务"
-bash scripts/opencode-ctl.sh  run --task-id t3 --model anthropic/claude-sonnet-4-6 --skip-permissions -- "任务"
-```
-
-### 输出格式
-
-所有命令输出 JSON，便于程序解析：
-
-```json
-{"task_id":"t1","status":"completed","exit_code":0,"result":"Hello, World!"}
-{"task_id":"t1","status":"running","pid":1234,"mode":"background"}
-{"error":"connection_or_auth_failure","detail":"...","action":"Please check API Key..."}
-```
 
 ---
 
@@ -241,58 +215,58 @@ bash scripts/opencode-ctl.sh  run --task-id t3 --model anthropic/claude-sonnet-4
 <details>
 <summary><b>claude-ctl.sh</b></summary>
 
-| 参数 | 说明 |
-|------|------|
-| `--task-id <id>` | 任务 ID（必须） |
-| `--bg` | 后台执行 |
+| 参数                         | 说明                                                       |
+| -------------------------- | -------------------------------------------------------- |
+| `--task-id <id>`           | 任务 ID（必须）                                                |
+| `--bg`                     | 后台执行                                                     |
 | `--permission-mode <mode>` | `acceptEdits` / `bypassPermissions` / `default` / `plan` |
-| `--allowed-tools <tools>` | 限制可用工具，如 `"Bash,Write,Read"` |
-| `--max-turns <n>` | 限制 Agent 轮次 |
-| `--model <model>` | 指定模型 |
+| `--allowed-tools <tools>`  | 限制可用工具，如 `"Bash,Write,Read"`                             |
+| `--max-turns <n>`          | 限制 Agent 轮次                                              |
+| `--model <model>`          | 指定模型                                                     |
 
 </details>
 
 <details>
 <summary><b>codex-ctl.sh</b></summary>
 
-| 参数 | 说明 |
-|------|------|
-| `--task-id <id>` | 任务 ID（必须） |
-| `--bg` | 后台执行 |
+| 参数                 | 说明                                                     |
+| ------------------ | ------------------------------------------------------ |
+| `--task-id <id>`   | 任务 ID（必须）                                              |
+| `--bg`             | 后台执行                                                   |
 | `--sandbox <mode>` | `read-only` / `workspace-write` / `danger-full-access` |
-| `--bypass` | 跳过所有审批和沙箱 |
-| `--model <model>` | 指定模型（如 `o3`, `o4-mini`, `gpt-4.1`） |
-| `--workdir <dir>` | 指定工作目录 |
-| `--skip-git-check` | 允许在非 Git 仓库中运行 |
+| `--bypass`         | 跳过所有审批和沙箱                                              |
+| `--model <model>`  | 指定模型（如 `o3`, `o4-mini`, `gpt-4.1`）                     |
+| `--workdir <dir>`  | 指定工作目录                                                 |
+| `--skip-git-check` | 允许在非 Git 仓库中运行                                         |
 
 </details>
 
 <details>
 <summary><b>opencode-ctl.sh</b></summary>
 
-| 参数 | 说明 |
-|------|------|
-| `--task-id <id>` | 任务 ID（不指定则自动生成） |
-| `--bg` | 后台执行 |
+| 参数                         | 说明                                    |
+| -------------------------- | ------------------------------------- |
+| `--task-id <id>`           | 任务 ID（不指定则自动生成）                       |
+| `--bg`                     | 后台执行                                  |
 | `--model <provider/model>` | 指定模型（如 `anthropic/claude-sonnet-4-6`） |
-| `--agent <name>` | 指定 Agent |
-| `--dir <dir>` | 指定工作目录 |
-| `--skip-permissions` | 自动审批所有权限（危险） |
-| `--files <f1,f2>` | 附加文件（逗号分隔） |
+| `--agent <name>`           | 指定 Agent                              |
+| `--dir <dir>`              | 指定工作目录                                |
+| `--skip-permissions`       | 自动审批所有权限（危险）                          |
+| `--files <f1,f2>`          | 附加文件（逗号分隔）                            |
 
 </details>
 
 <details>
 <summary><b>codebuddy-ctl.sh</b></summary>
 
-| 参数 | 说明 |
-|------|------|
-| `--task-id <id>` | 任务 ID（不指定则自动生成） |
-| `--bg` | 后台执行 |
+| 参数                         | 说明                                                       |
+| -------------------------- | -------------------------------------------------------- |
+| `--task-id <id>`           | 任务 ID（不指定则自动生成）                                          |
+| `--bg`                     | 后台执行                                                     |
 | `--permission-mode <mode>` | `acceptEdits` / `bypassPermissions` / `default` / `plan` |
-| `--allowed-tools <tools>` | 限制可用工具 |
-| `--max-turns <n>` | 限制 Agent 轮次 |
-| `--model <model>` | 指定模型 |
+| `--allowed-tools <tools>`  | 限制可用工具                                                   |
+| `--max-turns <n>`          | 限制 Agent 轮次                                              |
+| `--model <model>`          | 指定模型                                                     |
 
 </details>
 

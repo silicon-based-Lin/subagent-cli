@@ -43,21 +43,44 @@
 
 ---
 
-## Quick Start
+## Usage
+
+### Trigger in Agent CLI
+
+```
+# Claude Code slash command
+/subagent-cli
+
+# Natural language (works in Claude Code & Codex)
+"Use Codex CLI as a subAgent"
+"Wrap OpenCode CLI"
+"Run 3 Claude Code subAgents in parallel to write tests"
+```
+
+### Terminal commands
 
 ```bash
-# 1. Verify CLI availability
-bash scripts/check_cli.sh claude
+# Foreground (sync)
+bash scripts/claude-ctl.sh run --task-id t1 --permission-mode acceptEdits -- "List files"
 
-# 2. Run a simple task
-bash scripts/claude-ctl.sh run --task-id test-1 --permission-mode acceptEdits -- "Reply with: OK"
+# Background (async)
+bash scripts/codex-ctl.sh run --task-id t2 --bg --sandbox workspace-write --skip-git-check -- "Analyze code"
 
-# 3. Parallel dispatch
-bash scripts/claude-ctl.sh run --task-id a1 --bg --permission-mode acceptEdits -- "Task A" &
-bash scripts/codex-ctl.sh  run --task-id b1 --bg --sandbox workspace-write --skip-git-check -- "Task B" &
-wait
-bash scripts/claude-ctl.sh result --task-id a1
-bash scripts/codex-ctl.sh  result --task-id b1
+# Status / Result / Cancel / Cleanup
+bash scripts/claude-ctl.sh status --task-id t1
+bash scripts/codex-ctl.sh result --task-id t2
+bash scripts/claude-ctl.sh cancel --task-id t1
+bash scripts/claude-ctl.sh cleanup
+```
+
+### Output format
+
+All commands output JSON:
+
+```json
+{"task_id":"t1","status":"completed","exit_code":0,"result":"Hello, World!"}
+{"task_id":"t1","status":"running","pid":1234,"mode":"background"}
+{"error":"connection_or_auth_failure","detail":"...","action":"Please check API Key..."}
 ```
 
 ---
@@ -139,56 +162,6 @@ bash claude-ctl.sh run --task-id test --permission-mode acceptEdits -- "Hello"
 > - Parallel tasks may exhaust system resources or API quotas
 >
 > **Always run inside a Git repo so you can `git diff` and `git checkout` to rollback.**
-
----
-
-## Usage
-
-### Trigger in Agent CLI
-
-```
-# Claude Code slash command
-/subagent-cli
-
-# Natural language (works in Claude Code & Codex)
-"Use Codex CLI as a subAgent"
-"Wrap OpenCode CLI"
-"Run 3 Claude Code subAgents in parallel to write tests"
-```
-
-### Terminal commands
-
-```bash
-# Foreground (sync)
-bash scripts/claude-ctl.sh run --task-id t1 --permission-mode acceptEdits -- "List files"
-
-# Background (async)
-bash scripts/codex-ctl.sh run --task-id t2 --bg --sandbox workspace-write --skip-git-check -- "Analyze code"
-
-# Status / Result / Cancel / Cleanup
-bash scripts/claude-ctl.sh status --task-id t1
-bash scripts/codex-ctl.sh result --task-id t2
-bash scripts/claude-ctl.sh cancel --task-id t1
-bash scripts/claude-ctl.sh cleanup
-```
-
-### Specify model
-
-```bash
-bash scripts/claude-ctl.sh    run --task-id t1 --model claude-sonnet-4-6 --permission-mode acceptEdits -- "Task"
-bash scripts/codex-ctl.sh     run --task-id t2 --model o3 --sandbox workspace-write --skip-git-check -- "Task"
-bash scripts/opencode-ctl.sh  run --task-id t3 --model anthropic/claude-sonnet-4-6 --skip-permissions -- "Task"
-```
-
-### Output format
-
-All commands output JSON:
-
-```json
-{"task_id":"t1","status":"completed","exit_code":0,"result":"Hello, World!"}
-{"task_id":"t1","status":"running","pid":1234,"mode":"background"}
-{"error":"connection_or_auth_failure","detail":"...","action":"Please check API Key..."}
-```
 
 ---
 
