@@ -283,8 +283,6 @@ subAgent 场景的核心需求是「批量派发 + 并行执行 + 结果收集�
 subagent-cli/
 ├── .claude-plugin/
 │   └── plugin.json             # Claude Code 插件 manifest
-├── codex-plugin/
-│   └── plugin.json             # Codex CLI 插件 manifest
 ├── commands/
 │   └── subagent-cli.md         # 斜杠命令定义
 ├── scripts/

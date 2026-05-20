@@ -281,8 +281,6 @@ All `*-ctl.sh` scripts include built-in `check_auth_errors` that scans output fo
 subagent-cli/
 ├── .claude-plugin/
 │   └── plugin.json             # Claude Code plugin manifest
-├── codex-plugin/
-│   └── plugin.json             # Codex CLI plugin manifest
 ├── commands/
 │   └── subagent-cli.md         # Slash command definition
 ├── scripts/
