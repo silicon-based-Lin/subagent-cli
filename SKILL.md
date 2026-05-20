@@ -39,6 +39,29 @@ description: |
 
 ---
 
+### 门禁 0.5：Windows Git Bash 检测
+
+当检测到当前系统为 Windows 时，需确认用户已安装 Git Bash。
+
+**检测方式**：检查 `MSYSTEM` 或 `GIT_BASH` 环境变量，或检查 `uname` 输出是否包含 `MINGW` / `MSYS`。
+
+```bash
+uname -s 2>/dev/null | grep -qiE 'MINGW|MSYS' && echo "Git Bash" || echo "Not Git Bash"
+```
+
+- **非 Windows** → 跳过此门禁
+- **Windows 且 Git Bash 可用** → 继续下一步
+- **Windows 但无 Git Bash** → 暂停，询问用户：
+
+> 检测到当前系统为 Windows。subagent-cli 的脚本依赖 Bash 环境，请先安装 Git for Windows：
+> https://git-scm.com/download/win
+>
+> 安装完成后，请在 Git Bash 中重新运行此技能。
+
+用户确认已安装后重新检测。未确认则终止。
+
+---
+
 ### 门禁 1：环境检测
 
 在做任何事之前，先确认目标 CLI 是否可用。
