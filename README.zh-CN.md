@@ -2,7 +2,7 @@
 
 **[English](README.md) | [中文](README.zh-CN.md)**
 
-> 将任意 Agent CLI 封装为主 Agent 的可复用 subAgent，支持并行派发。
+> 将任意 Agent CLI 封装为主 Agent 可复用的 subAgent，并支持并行派发任务。
 
 ![Bash](https://img.shields.io/badge/Shell-Bash-4EAA25?logo=gnubash&logoColor=white)
 ![License](https://img.shields.io/badge/License-MIT-blue)
@@ -15,10 +15,10 @@
 
 **一句话：让贵的 Agent 当包工头，便宜的 Agent 干活。**
 
-| 角色                 | 谁干                                   | 干什么            |
-| ------------------ | ------------------------------------ | -------------- |
-| 包工头 (Orchestrator) | Codex / Claude Code / 任意主 Agent      | 理解需求、拆任务、验收结果  |
-| 打工仔 (SubAgent)     | Claude Code / DeepSeek / Codex / ... | 并行执行具体编码、测试、审查 |
+| 角色 | 适用对象 | 职责 |
+|------|----------|------|
+| 包工头 (Orchestrator) | Codex / Claude Code / 任意主 Agent | 理解需求、拆分任务、验收结果 |
+| 打工仔 (SubAgent) | Claude Code / DeepSeek / Codex / ... | 并行执行具体编码、测试、审查任务 |
 
 ```
 ┌─────────────┐
@@ -29,18 +29,18 @@
   ┌────┼────┬────┐
   ▼    ▼    ▼    ▼
 ┌───┐┌───┐┌───┐┌───┐
-│ S1││ S2││ S3││ S4│  ← 并行执行（可用便宜模型，可混搭不同 CLI）
+│ S1││ S2││ S3││ S4│  ← 并行执行（可使用便宜模型，也可混搭不同 CLI）
 └───┘└───┘└───┘└───┘
 ```
 
 **典型用法：**
 
-- **省 Codex 额度** — GPT-5.5 只做规划和验收，脏活累活全扔给 Claude Code + DeepSeek V4
+- **省 Codex 额度** — GPT-5.5 只做规划和验收，具体执行交给 Claude Code + DeepSeek V4
 - **异构团队协作** — 架构师 (Claude) 出方案，开发 (Codex) 写代码，审查 (CodeBuddy) 抓 bug
-- **批量处理** — 10 个文件迁移 TypeScript？10 个 subAgent 并行，主 Agent 坐等收货
+- **批量处理** — 要迁移 10 个 TypeScript 文件？启动 10 个 subAgent 并行处理，主 Agent 负责汇总结果
 
-> **核心价值**：把「思考」和「执行」分离，用高级模型做决策，用低成本模型跑腿。
-> 总成本可能只有全用高级模型的 1/5。
+> **核心价值**：把「思考」和「执行」分离，用高级模型做决策，用低成本模型处理具体任务。
+> 总成本可能只有全程使用高级模型的 1/5。
 
 ---
 
@@ -53,7 +53,7 @@
 /subagent-cli
 
 # 自然语言（Claude Code / Codex 均可）
-"把 Codex CLI 作为 subAgent"
+"将 Codex CLI 用作 subAgent"
 "封装 OpenCode CLI"
 "用 3 个 Claude Code subAgent 并行写测试"
 ```
@@ -76,7 +76,7 @@ bash scripts/claude-ctl.sh cleanup
 
 ### 输出格式
 
-所有命令输出 JSON，便于程序解析：
+所有命令都会输出 JSON，便于程序解析：
 
 ```json
 {"task_id":"t1","status":"completed","exit_code":0,"result":"Hello, World!"}
@@ -92,14 +92,14 @@ bash scripts/claude-ctl.sh cleanup
 <summary><b>方式一：Claude Code 插件安装（推荐）</b></summary>
 
 ```bash
-# 添加 marketplace
+# 添加 Marketplace
 /plugin marketplace add silicon-based-Lin/subagent-cli
 
-# 从 marketplace 安装
+# 从 Marketplace 安装
 /plugin install subagent-cli@<marketplace-name>
 ```
 
-安装后自动注册 `/subagent-cli` 斜杠命令和技能触发器。
+安装后会自动注册 `/subagent-cli` 斜杠命令和技能触发器。
 
 </details>
 
@@ -115,10 +115,10 @@ cp -r /tmp/subagent-cli .agents/skills/subagent-cli
 rm -rf /tmp/subagent-cli
 ```
 
-其他 CLI 复制到对应目录：
+其他 CLI 请复制到对应目录：
 
 | CLI | 技能目录 |
-|-----|---------|
+|-----|----------|
 | Claude Code | `.claude/skills/` |
 | Codex | `.agents/skills/` |
 
@@ -126,29 +126,29 @@ rm -rf /tmp/subagent-cli
 
 ### 前置条件
 
-| 条件     | 说明                                         |
-| ------ | ------------------------------------------ |
-| Bash   | 系统自带（Windows 需 Git Bash）                   |
+| 条件 | 说明 |
+|------|------|
+| Bash | 系统自带（Windows 需 Git Bash） |
 | 目标 CLI | 已安装并完成登录认证（见 `references/cli-patterns.md`） |
-| Python | 结果提取使用 Python（仅 UTF-8 编码处理）                |
+| Python | 用于 UTF-8 结果提取 |
 
 ---
 
 ## 注意事项
 
 > [!CAUTION]
-> 所有 `*-ctl.sh` 脚本会在沙箱或绕过审批的模式下运行 Agent CLI。
+> 所有 `*-ctl.sh` 脚本都会在沙箱或绕过审批的模式下运行 Agent CLI。
 > subAgent 将拥有**文件读写和命令执行权限**，且无需人工确认。
-> 
-> **请勿在生产环境、含敏感数据的目录、或未经审查的 prompt 下运行。**
-> 
+>
+> **请勿在生产环境、包含敏感数据的目录，或使用未经审查的 prompt 时运行。**
+>
 > 风险：
-> 
+>
 > - subAgent 可能执行非预期的文件操作
 > - subAgent 可能访问工作目录外的文件（取决于沙箱配置）
 > - 并行任务可能耗尽系统资源或 API 配额
-> 
-> **建议：始终在 Git 仓库中运行，以便通过 `git diff` 和 `git checkout` 回滚。**
+>
+> **建议：始终在 Git 仓库中运行，便于使用 `git diff` 审查变更，并在必要时通过 `git checkout` 回滚。**
 
 ---
 
@@ -158,7 +158,7 @@ rm -rf /tmp/subagent-cli
 <summary><b>同构并行 — 同一 CLI 多任务分发</b></summary>
 
 ```
-"并行驱动 3 个 Claude Code subAgent，分别负责：
+"并行启动 3 个 Claude Code subAgent，分别负责：
  - subAgent-1: 编写用户模块的单元测试
  - subAgent-2: 编写订单模块的单元测试
  - subAgent-3: 编写支付模块的单元测试
@@ -171,7 +171,7 @@ rm -rf /tmp/subagent-cli
 <summary><b>异构协作 — 不同 CLI 各司其职</b></summary>
 
 ```
-"组建一个 4 人 subAgent 团队：
+"组建一个由 4 个 subAgent 构成的团队：
  - 架构师 (Claude Code): 设计数据库 schema 和 API 接口
  - 后端开发 (Codex): 实现 API 逻辑
  - 前端开发 (OpenCode): 编写 React 组件
@@ -200,58 +200,58 @@ rm -rf /tmp/subagent-cli
 <details>
 <summary><b>claude-ctl.sh</b></summary>
 
-| 参数                         | 说明                                                       |
-| -------------------------- | -------------------------------------------------------- |
-| `--task-id <id>`           | 任务 ID（必须）                                                |
-| `--bg`                     | 后台执行                                                     |
+| 参数 | 说明 |
+|------|------|
+| `--task-id <id>` | 任务 ID（必须） |
+| `--bg` | 后台执行 |
 | `--permission-mode <mode>` | `acceptEdits` / `bypassPermissions` / `default` / `plan` |
-| `--allowed-tools <tools>`  | 限制可用工具，如 `"Bash,Write,Read"`                             |
-| `--max-turns <n>`          | 限制 Agent 轮次                                              |
-| `--model <model>`          | 指定模型                                                     |
+| `--allowed-tools <tools>` | 限制可用工具，如 `"Bash,Write,Read"` |
+| `--max-turns <n>` | 限制 Agent 轮次 |
+| `--model <model>` | 指定模型 |
 
 </details>
 
 <details>
 <summary><b>codex-ctl.sh</b></summary>
 
-| 参数                 | 说明                                                     |
-| ------------------ | ------------------------------------------------------ |
-| `--task-id <id>`   | 任务 ID（必须）                                              |
-| `--bg`             | 后台执行                                                   |
+| 参数 | 说明 |
+|------|------|
+| `--task-id <id>` | 任务 ID（必须） |
+| `--bg` | 后台执行 |
 | `--sandbox <mode>` | `read-only` / `workspace-write` / `danger-full-access` |
-| `--bypass`         | 跳过所有审批和沙箱                                              |
-| `--model <model>`  | 指定模型（如 `o3`, `o4-mini`, `gpt-4.1`）                     |
-| `--workdir <dir>`  | 指定工作目录                                                 |
-| `--skip-git-check` | 允许在非 Git 仓库中运行                                         |
+| `--bypass` | 跳过所有审批和沙箱 |
+| `--model <model>` | 指定模型（如 `o3`, `o4-mini`, `gpt-4.1`） |
+| `--workdir <dir>` | 指定工作目录 |
+| `--skip-git-check` | 允许在非 Git 仓库中运行 |
 
 </details>
 
 <details>
 <summary><b>opencode-ctl.sh</b></summary>
 
-| 参数                         | 说明                                    |
-| -------------------------- | ------------------------------------- |
-| `--task-id <id>`           | 任务 ID（不指定则自动生成）                       |
-| `--bg`                     | 后台执行                                  |
+| 参数 | 说明 |
+|------|------|
+| `--task-id <id>` | 任务 ID（不指定则自动生成） |
+| `--bg` | 后台执行 |
 | `--model <provider/model>` | 指定模型（如 `anthropic/claude-sonnet-4-6`） |
-| `--agent <name>`           | 指定 Agent                              |
-| `--dir <dir>`              | 指定工作目录                                |
-| `--skip-permissions`       | 自动审批所有权限（危险）                          |
-| `--files <f1,f2>`          | 附加文件（逗号分隔）                            |
+| `--agent <name>` | 指定 Agent |
+| `--dir <dir>` | 指定工作目录 |
+| `--skip-permissions` | 自动审批所有权限（危险） |
+| `--files <f1,f2>` | 附加文件（逗号分隔） |
 
 </details>
 
 <details>
 <summary><b>codebuddy-ctl.sh</b></summary>
 
-| 参数                         | 说明                                                       |
-| -------------------------- | -------------------------------------------------------- |
-| `--task-id <id>`           | 任务 ID（不指定则自动生成）                                          |
-| `--bg`                     | 后台执行                                                     |
+| 参数 | 说明 |
+|------|------|
+| `--task-id <id>` | 任务 ID（不指定则自动生成） |
+| `--bg` | 后台执行 |
 | `--permission-mode <mode>` | `acceptEdits` / `bypassPermissions` / `default` / `plan` |
-| `--allowed-tools <tools>`  | 限制可用工具                                                   |
-| `--max-turns <n>`          | 限制 Agent 轮次                                              |
-| `--model <model>`          | 指定模型                                                     |
+| `--allowed-tools <tools>` | 限制可用工具 |
+| `--max-turns <n>` | 限制 Agent 轮次 |
+| `--model <model>` | 指定模型 |
 
 </details>
 
@@ -261,20 +261,20 @@ rm -rf /tmp/subagent-cli
 
 ### 为什么用 Bash？
 
-- **零依赖** — 系统自带 Bash，无需 Python/Node.js
+- **零核心依赖** — 核心控制层只依赖 Bash（Windows 可使用 Git Bash）
 - **零代码入侵** — 不修改目标 CLI 源码，仅通过公开接口交互
-- **进程级隔离** — 每个任务独立进程，崩溃互不影响
+- **进程级隔离** — 每个任务都是独立进程，即使崩溃也不会相互影响
 - **透明可审计** — `cat *.ctl.sh` 即可审查完整行为
 - **统一接口** — 所有 CLI 共享 `run / status / result / cancel / cleanup`
-- **JSON 原生输出** — 主 Agent 直接解析，无需正则
+- **JSON 原生输出** — 主 Agent 可直接解析，无需正则
 
 ### 为什么不用 MCP？
 
-subAgent 场景的核心需求是「批量派发 + 并行执行 + 结果收集」，Bash 的无状态进程模型完美匹配。MCP 更适合「单次工具调用 + 实时交互」的场景。
+subAgent 场景的核心需求是「批量派发 + 并行执行 + 结果收集」，Bash 的无状态进程模型非常适合。MCP 更适合「单次工具调用 + 实时交互」的场景。
 
 ### 认证错误检测
 
-所有 `*-ctl.sh` 内置 `check_auth_errors`，自动扫描输出中的 `auth`、`unauthorized`、`401`、`403`、`timeout`、`ECONNREFUSED` 等关键词。匹配即终止任务，标记为 `failed`，返回包含修复建议的错误 JSON。
+所有 `*-ctl.sh` 内置 `check_auth_errors`，会自动扫描输出中的 `auth`、`unauthorized`、`401`、`403`、`timeout`、`ECONNREFUSED` 等关键词。命中后会立即终止任务，标记为 `failed`，并返回包含修复建议的错误 JSON。
 
 ---
 
@@ -305,7 +305,7 @@ subagent-cli/
 封装一个新的 Agent CLI 只需 3 步：
 
 ```bash
-# 1. 侦察：读取帮助，找到非交互模式和输出格式参数
+# 1. 调研：读取帮助，找到非交互模式和输出格式参数
 <cli> --help 2>&1
 
 # 2. 复制模板：以任一现有 *-ctl.sh 为起点
