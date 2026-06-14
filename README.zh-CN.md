@@ -11,6 +11,16 @@
 
 ---
 
+## 🎬 自然语言演示
+
+![subagent-cli 自然语言演示封面](assets/natural-language-demo/subagent-cli-natural-demo.png)
+
+![subagent-cli 自然语言演示](assets/natural-language-demo/subagent-cli-natural-demo.gif)
+
+> 在 Codex 和 Claude Code 中通过自然语言触发 `subagent-cli`，不把 `scripts/*.sh` 作为入口。
+
+---
+
 ## 🧭 这是什么？
 
 **一句话：让高成本 Agent 负责规格约束和任务规划（spec、plan），让低成本 Agent 执行任务（execute）。**

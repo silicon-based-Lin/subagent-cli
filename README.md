@@ -11,6 +11,16 @@
 
 ---
 
+## 🎬 Natural Language Demo
+
+![subagent-cli natural language demo cover](assets/natural-language-demo/subagent-cli-natural-demo.png)
+
+![subagent-cli natural language demo](assets/natural-language-demo/subagent-cli-natural-demo.gif)
+
+> Trigger `subagent-cli` by natural language in Codex and Claude Code, without using `scripts/*.sh` as the entrypoint.
+
+---
+
 ## 🧭 What is this?
 
 **TL;DR: Let expensive Agents think, let cheap Agents work.**
