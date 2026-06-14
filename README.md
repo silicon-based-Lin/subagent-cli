@@ -41,6 +41,16 @@
 
 > **Core value**: Separate "thinking" from "doing". Use premium models for decisions, low-cost models for execution. Total cost can be 1/5 of using premium models for everything.
 
+### 🔎 Common Search Phrases
+
+People looking for this project may search for:
+
+- `Claude Code subAgent`, `Claude Code plugin`, `Claude Code slash command`
+- `Codex CLI wrapper`, `Codex subAgent`, `OpenAI Codex CLI automation`
+- `OpenCode CLI wrapper`, `CodeBuddy CLI wrapper`, `Gemini CLI automation`, `Aider automation`
+- `AI coding agent`, `multi-agent coding`, `agent orchestration`, `parallel coding agents`
+- `LLM CLI wrapper`, `subagent tool`, `background task execution`, `JSON output`
+
 ---
 
 ## 🚀 Usage
@@ -130,6 +140,16 @@ For other CLIs, copy to the corresponding skills directory:
 | Bash | Built-in on macOS/Linux; Git Bash on Windows |
 | Target CLI | Installed and authenticated (see `references/cli-patterns.md`) |
 | Python | Used for UTF-8 result extraction |
+
+### 🧩 Supported Agent CLI Wrappers
+
+| Agent CLI | Wrapper | Common use case |
+|-----------|---------|-----------------|
+| Claude Code | `scripts/claude-ctl.sh` | Claude Code subAgent, review agent, test generation worker |
+| Codex CLI | `scripts/codex-ctl.sh` | Codex subAgent, implementation worker, code analysis task runner |
+| OpenCode | `scripts/opencode-ctl.sh` | OpenCode wrapper for parallel coding and refactoring tasks |
+| CodeBuddy | `scripts/codebuddy-ctl.sh` | Code review agent, QA agent, verification worker |
+| Gemini CLI / Aider / other Agent CLIs | Template extension | Add a new `*-ctl.sh` wrapper with the same JSON task interface |
 
 ---
 

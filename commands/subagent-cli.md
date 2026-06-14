@@ -9,6 +9,16 @@ description: |
 
 将任意 Agent CLI（Claude Code、Codex、OpenCode、CodeBuddy、Gemini、Aider 等）封装为当前主 Agent 的可复用 subAgent Tool。
 
+## 关键词别名
+
+这个命令也适用于以下搜索词或自然语言表达：
+
+- Claude Code subAgent / Claude Code 插件 / Claude Code slash command
+- Codex CLI wrapper / Codex CLI 子代理 / Codex subAgent
+- OpenCode CLI wrapper / CodeBuddy CLI wrapper / Gemini CLI automation / Aider automation
+- 多 Agent 协作 / 多智能体编排 / parallel AI agents / agent orchestration
+- 命令行 Agent 封装 / LLM CLI wrapper / JSON task runner
+
 ## 触发条件
 
 当用户提到以下内容时触发：

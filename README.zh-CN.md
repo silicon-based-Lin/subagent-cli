@@ -42,6 +42,16 @@
 > **核心价值**：把「思考」和「执行」分离，用高级模型做决策，用低成本模型处理具体任务。
 > 总成本可能只有全程使用高级模型的 1/5。
 
+### 🔎 常见搜索词
+
+如果你正在搜索类似工具，可能会用到这些关键词：
+
+- `Claude Code subAgent`、`Claude Code 插件`、`Claude Code 斜杠命令`
+- `Codex CLI wrapper`、`Codex CLI 子代理`、`OpenAI Codex CLI automation`
+- `OpenCode CLI wrapper`、`CodeBuddy CLI wrapper`、`Gemini CLI automation`、`Aider automation`
+- `AI 编程 Agent`、`多 Agent 协作`、`多智能体编排`、`并行代码生成`
+- `命令行 Agent 封装`、`子 Agent 工具`、`后台任务执行`、`JSON 结果输出`
+
 ---
 
 ## 🚀 使用方式
@@ -131,6 +141,16 @@ rm -rf /tmp/subagent-cli
 | Bash | 系统自带（Windows 需 Git Bash） |
 | 目标 CLI | 已安装并完成登录认证（见 `references/cli-patterns.md`） |
 | Python | 用于 UTF-8 结果提取 |
+
+### 🧩 已支持和可扩展的 Agent CLI 封装
+
+| Agent CLI | Wrapper | 常见用途 |
+|-----------|---------|----------|
+| Claude Code | `scripts/claude-ctl.sh` | Claude Code subAgent、审查 Agent、测试生成 worker |
+| Codex CLI | `scripts/codex-ctl.sh` | Codex 子代理、实现 worker、代码分析任务 runner |
+| OpenCode | `scripts/opencode-ctl.sh` | 用于并行编码和重构任务的 OpenCode wrapper |
+| CodeBuddy | `scripts/codebuddy-ctl.sh` | 代码审查 Agent、QA Agent、验证 worker |
+| Gemini CLI / Aider / 其他 Agent CLI | 模板扩展 | 按相同 JSON 任务接口新增 `*-ctl.sh` wrapper |
 
 ---
 
