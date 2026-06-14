@@ -1,8 +1,8 @@
-# subagent-cli
+# 🤖 subagent-cli
 
 **[English](README.md) | [中文](README.zh-CN.md)**
 
-> 将任意 Agent CLI 封装为主 Agent 可复用的 subAgent，并支持并行派发任务。
+> ⚡ 将任意 Agent CLI 封装为主 Agent 可复用的 subAgent，并支持并行派发任务。
 
 ![Bash](https://img.shields.io/badge/Shell-Bash-4EAA25?logo=gnubash&logoColor=white)
 ![License](https://img.shields.io/badge/License-MIT-blue)
@@ -11,11 +11,11 @@
 
 ---
 
-## 这是什么？
+## 🧭 这是什么？
 
 **一句话：让高成本 Agent 负责规格约束和任务规划（spec、plan），让低成本 Agent 执行任务（execute）。**
 
-| 角色 | 适用对象 | 职责 |
+| 🎭 角色 | 👤 适用对象 | ⚙️ 职责 |
 |------|----------|------|
 | 包工头 (Orchestrator) | Codex / Claude Code / 任意主 Agent | 理解需求、拆分任务、验收结果 |
 | 打工仔 (SubAgent) | Claude Code / DeepSeek / Codex / ... | 并行执行具体编码、测试、审查任务 |
@@ -33,7 +33,7 @@
 └───┘└───┘└───┘└───┘
 ```
 
-**典型用法：**
+**🎯 典型用法：**
 
 - **省 Codex 额度** — GPT-5.5 只做规划和验收，具体执行交给 Claude Code + DeepSeek V4
 - **异构团队协作** — 架构师 (Claude) 出方案，开发 (Codex) 写代码，审查 (CodeBuddy) 抓 bug
@@ -44,9 +44,9 @@
 
 ---
 
-## 使用方式
+## 🚀 使用方式
 
-### 在 Agent CLI 中触发
+### 🗣️ 在 Agent CLI 中触发
 
 ```
 # Claude Code 斜杠命令
@@ -58,7 +58,7 @@
 "用 3 个 Claude Code subAgent 并行写测试"
 ```
 
-### 终端直接调用
+### 💻 终端直接调用
 
 ```bash
 # 同步执行（前台等待）
@@ -74,7 +74,7 @@ bash scripts/claude-ctl.sh cancel --task-id t1
 bash scripts/claude-ctl.sh cleanup
 ```
 
-### 输出格式
+### 📤 输出格式
 
 所有命令都会输出 JSON，便于程序解析：
 
@@ -86,10 +86,10 @@ bash scripts/claude-ctl.sh cleanup
 
 ---
 
-## 安装
+## 📦 安装
 
 <details>
-<summary><b>方式一：Claude Code 插件安装（推荐）</b></summary>
+<summary><b>🧩 方式一：Claude Code 插件安装（推荐）</b></summary>
 
 ```bash
 # 添加 Marketplace
@@ -104,7 +104,7 @@ bash scripts/claude-ctl.sh cleanup
 </details>
 
 <details>
-<summary><b>方式二：Git Clone（适用于任意 Agent CLI）</b></summary>
+<summary><b>📥 方式二：Git Clone（适用于任意 Agent CLI）</b></summary>
 
 克隆仓库并复制到目标 Agent CLI 的技能目录。以 Codex 为例：
 
@@ -117,16 +117,16 @@ rm -rf /tmp/subagent-cli
 
 其他 CLI 请复制到对应目录：
 
-| CLI | 技能目录 |
+| CLI | 📁 技能目录 |
 |-----|----------|
 | Claude Code | `.claude/skills/` |
 | Codex | `.agents/skills/` |
 
 </details>
 
-### 前置条件
+### ✅ 前置条件
 
-| 条件 | 说明 |
+| 条件 | 📝 说明 |
 |------|------|
 | Bash | 系统自带（Windows 需 Git Bash） |
 | 目标 CLI | 已安装并完成登录认证（见 `references/cli-patterns.md`） |
@@ -134,7 +134,7 @@ rm -rf /tmp/subagent-cli
 
 ---
 
-## 注意事项
+## ⚠️ 注意事项
 
 > [!CAUTION]
 > 所有 `*-ctl.sh` 脚本都会在沙箱或绕过审批的模式下运行 Agent CLI。
@@ -152,10 +152,10 @@ rm -rf /tmp/subagent-cli
 
 ---
 
-## 多 Agent 协作示例
+## 🧪 多 Agent 协作示例
 
 <details>
-<summary><b>同构并行 — 同一 CLI 多任务分发</b></summary>
+<summary><b>🔁 同构并行 — 同一 CLI 多任务分发</b></summary>
 
 ```
 "并行启动 3 个 Claude Code subAgent，分别负责：
@@ -168,7 +168,7 @@ rm -rf /tmp/subagent-cli
 </details>
 
 <details>
-<summary><b>异构协作 — 不同 CLI 各司其职</b></summary>
+<summary><b>🧬 异构协作 — 不同 CLI 各司其职</b></summary>
 
 ```
 "组建一个由 4 个 subAgent 构成的团队：
@@ -182,7 +182,7 @@ rm -rf /tmp/subagent-cli
 </details>
 
 <details>
-<summary><b>含审查验证的流水线</b></summary>
+<summary><b>✅ 含审查验证的流水线</b></summary>
 
 ```
 "用 subAgent 完成一个完整的开发流水线：
@@ -195,12 +195,12 @@ rm -rf /tmp/subagent-cli
 
 ---
 
-## CLI 参数参考
+## 🛠️ CLI 参数参考
 
 <details>
-<summary><b>claude-ctl.sh</b></summary>
+<summary><b>🐚 claude-ctl.sh</b></summary>
 
-| 参数 | 说明 |
+| 🚩 参数 | 📝 说明 |
 |------|------|
 | `--task-id <id>` | 任务 ID（必须） |
 | `--bg` | 后台执行 |
@@ -212,9 +212,9 @@ rm -rf /tmp/subagent-cli
 </details>
 
 <details>
-<summary><b>codex-ctl.sh</b></summary>
+<summary><b>🤖 codex-ctl.sh</b></summary>
 
-| 参数 | 说明 |
+| 🚩 参数 | 📝 说明 |
 |------|------|
 | `--task-id <id>` | 任务 ID（必须） |
 | `--bg` | 后台执行 |
@@ -227,9 +227,9 @@ rm -rf /tmp/subagent-cli
 </details>
 
 <details>
-<summary><b>opencode-ctl.sh</b></summary>
+<summary><b>🧰 opencode-ctl.sh</b></summary>
 
-| 参数 | 说明 |
+| 🚩 参数 | 📝 说明 |
 |------|------|
 | `--task-id <id>` | 任务 ID（不指定则自动生成） |
 | `--bg` | 后台执行 |
@@ -242,9 +242,9 @@ rm -rf /tmp/subagent-cli
 </details>
 
 <details>
-<summary><b>codebuddy-ctl.sh</b></summary>
+<summary><b>🔎 codebuddy-ctl.sh</b></summary>
 
-| 参数 | 说明 |
+| 🚩 参数 | 📝 说明 |
 |------|------|
 | `--task-id <id>` | 任务 ID（不指定则自动生成） |
 | `--bg` | 后台执行 |
@@ -257,9 +257,9 @@ rm -rf /tmp/subagent-cli
 
 ---
 
-## 设计决策
+## 🧱 设计决策
 
-### 为什么用 Bash？
+### 🐚 为什么用 Bash？
 
 - **零核心依赖** — 核心控制层只依赖 Bash（Windows 可使用 Git Bash）
 - **零代码入侵** — 不修改目标 CLI 源码，仅通过公开接口交互
@@ -268,17 +268,17 @@ rm -rf /tmp/subagent-cli
 - **统一接口** — 所有 CLI 共享 `run / status / result / cancel / cleanup`
 - **JSON 原生输出** — 主 Agent 可直接解析，无需正则
 
-### 为什么不用 MCP？
+### 🔌 为什么不用 MCP？
 
 subAgent 场景的核心需求是「批量派发 + 并行执行 + 结果收集」，Bash 的无状态进程模型非常适合。MCP 更适合「单次工具调用 + 实时交互」的场景。
 
-### 认证错误检测
+### 🛡️ 认证错误检测
 
 所有 `*-ctl.sh` 内置 `check_auth_errors`，会自动扫描输出中的 `auth`、`unauthorized`、`401`、`403`、`timeout`、`ECONNREFUSED` 等关键词。命中后会立即终止任务，标记为 `failed`，并返回包含修复建议的错误 JSON。
 
 ---
 
-## 项目结构
+## 🗂️ 项目结构
 
 ```
 subagent-cli/
@@ -300,7 +300,7 @@ subagent-cli/
 
 ---
 
-## 添加新 CLI
+## ➕ 添加新 CLI
 
 封装一个新的 Agent CLI 只需 3 步：
 
@@ -318,6 +318,6 @@ cp scripts/claude-ctl.sh scripts/<cli>-ctl.sh
 
 ---
 
-## License
+## 📄 License
 
 MIT

@@ -1,8 +1,8 @@
-# subagent-cli
+# 🤖 subagent-cli
 
 **[English](README.md) | [中文](README.zh-CN.md)**
 
-> Wrap any Agent CLI as a reusable subAgent for your primary Agent, with parallel task dispatch.
+> ⚡ Wrap any Agent CLI as a reusable subAgent for your primary Agent, with parallel task dispatch.
 
 ![Bash](https://img.shields.io/badge/Shell-Bash-4EAA25?logo=gnubash&logoColor=white)
 ![License](https://img.shields.io/badge/License-MIT-blue)
@@ -11,11 +11,11 @@
 
 ---
 
-## What is this?
+## 🧭 What is this?
 
 **TL;DR: Let expensive Agents think, let cheap Agents work.**
 
-| Role | Who | Does What |
+| 🎭 Role | 👤 Who | ⚙️ Does What |
 |------|-----|-----------|
 | Boss (Orchestrator) | Codex / Claude Code / any primary Agent | Understand requirements, split tasks, review results |
 | Worker (SubAgent) | Claude Code / DeepSeek / Codex / ... | Execute coding, testing, review in parallel |
@@ -33,7 +33,7 @@
 └───┘└───┘└───┘└───┘
 ```
 
-**Use cases:**
+**🎯 Use cases:**
 
 - **Save Codex quota** — GPT-5.5 plans only, Claude Code + DeepSeek V4 do the heavy lifting
 - **Heterogeneous teams** — Architect (Claude) designs, Developer (Codex) codes, Reviewer (CodeBuddy) audits
@@ -43,9 +43,9 @@
 
 ---
 
-## Usage
+## 🚀 Usage
 
-### Trigger in Agent CLI
+### 🗣️ Trigger in Agent CLI
 
 ```
 # Claude Code slash command
@@ -57,7 +57,7 @@
 "Run 3 Claude Code subAgents in parallel to write tests"
 ```
 
-### Terminal commands
+### 💻 Terminal commands
 
 ```bash
 # Foreground (sync)
@@ -73,7 +73,7 @@ bash scripts/claude-ctl.sh cancel --task-id t1
 bash scripts/claude-ctl.sh cleanup
 ```
 
-### Output format
+### 📤 Output format
 
 All commands output JSON:
 
@@ -85,10 +85,10 @@ All commands output JSON:
 
 ---
 
-## Install
+## 📦 Install
 
 <details>
-<summary><b>Option 1: Claude Code Plugin (Recommended)</b></summary>
+<summary><b>🧩 Option 1: Claude Code Plugin (Recommended)</b></summary>
 
 ```bash
 # Add marketplace
@@ -103,7 +103,7 @@ Automatically registers the `/subagent-cli` slash command and skill triggers.
 </details>
 
 <details>
-<summary><b>Option 2: Git Clone (any Agent CLI)</b></summary>
+<summary><b>📥 Option 2: Git Clone (any Agent CLI)</b></summary>
 
 Clone the repo and copy to your Agent CLI's skills directory. Example with Codex:
 
@@ -116,16 +116,16 @@ rm -rf /tmp/subagent-cli
 
 For other CLIs, copy to the corresponding skills directory:
 
-| CLI | Skills directory |
+| CLI | 📁 Skills directory |
 |-----|-----------------|
 | Claude Code | `.claude/skills/` |
 | Codex | `.agents/skills/` |
 
 </details>
 
-### Prerequisites
+### ✅ Prerequisites
 
-| Requirement | Notes |
+| Requirement | 📝 Notes |
 |-------------|-------|
 | Bash | Built-in on macOS/Linux; Git Bash on Windows |
 | Target CLI | Installed and authenticated (see `references/cli-patterns.md`) |
@@ -133,7 +133,7 @@ For other CLIs, copy to the corresponding skills directory:
 
 ---
 
-## Warning
+## ⚠️ Warning
 
 > [!CAUTION]
 > All `*-ctl.sh` scripts run Agent CLIs in sandbox or permission-bypass mode.
@@ -150,10 +150,10 @@ For other CLIs, copy to the corresponding skills directory:
 
 ---
 
-## Multi-Agent Examples
+## 🧪 Multi-Agent Examples
 
 <details>
-<summary><b>Homogeneous parallel — same CLI, multiple tasks</b></summary>
+<summary><b>🔁 Homogeneous parallel — same CLI, multiple tasks</b></summary>
 
 ```
 "Run 3 Claude Code subAgents in parallel:
@@ -166,7 +166,7 @@ For other CLIs, copy to the corresponding skills directory:
 </details>
 
 <details>
-<summary><b>Heterogeneous — different CLIs, different roles</b></summary>
+<summary><b>🧬 Heterogeneous — different CLIs, different roles</b></summary>
 
 ```
 "Build a 4-agent team:
@@ -180,7 +180,7 @@ For other CLIs, copy to the corresponding skills directory:
 </details>
 
 <details>
-<summary><b>Pipeline with review gates</b></summary>
+<summary><b>✅ Pipeline with review gates</b></summary>
 
 ```
 "Complete dev pipeline with subAgents:
@@ -193,12 +193,12 @@ For other CLIs, copy to the corresponding skills directory:
 
 ---
 
-## CLI Options Reference
+## 🛠️ CLI Options Reference
 
 <details>
-<summary><b>claude-ctl.sh</b></summary>
+<summary><b>🐚 claude-ctl.sh</b></summary>
 
-| Flag | Description |
+| 🚩 Flag | 📝 Description |
 |------|-------------|
 | `--task-id <id>` | Task ID (required) |
 | `--bg` | Run in background |
@@ -210,9 +210,9 @@ For other CLIs, copy to the corresponding skills directory:
 </details>
 
 <details>
-<summary><b>codex-ctl.sh</b></summary>
+<summary><b>🤖 codex-ctl.sh</b></summary>
 
-| Flag | Description |
+| 🚩 Flag | 📝 Description |
 |------|-------------|
 | `--task-id <id>` | Task ID (required) |
 | `--bg` | Run in background |
@@ -225,9 +225,9 @@ For other CLIs, copy to the corresponding skills directory:
 </details>
 
 <details>
-<summary><b>opencode-ctl.sh</b></summary>
+<summary><b>🧰 opencode-ctl.sh</b></summary>
 
-| Flag | Description |
+| 🚩 Flag | 📝 Description |
 |------|-------------|
 | `--task-id <id>` | Task ID (auto-generated if omitted) |
 | `--bg` | Run in background |
@@ -240,9 +240,9 @@ For other CLIs, copy to the corresponding skills directory:
 </details>
 
 <details>
-<summary><b>codebuddy-ctl.sh</b></summary>
+<summary><b>🔎 codebuddy-ctl.sh</b></summary>
 
-| Flag | Description |
+| 🚩 Flag | 📝 Description |
 |------|-------------|
 | `--task-id <id>` | Task ID (auto-generated if omitted) |
 | `--bg` | Run in background |
@@ -255,9 +255,9 @@ For other CLIs, copy to the corresponding skills directory:
 
 ---
 
-## Design Decisions
+## 🧱 Design Decisions
 
-### Why Bash?
+### 🐚 Why Bash?
 
 - **Zero dependencies** — Bash is built-in everywhere (Git Bash on Windows)
 - **Zero code invasion** — Only calls CLI public interfaces, never modifies target CLI
@@ -266,17 +266,17 @@ For other CLIs, copy to the corresponding skills directory:
 - **Unified interface** — All CLIs share `run / status / result / cancel / cleanup`
 - **JSON-native output** — Structured output, no regex parsing needed
 
-### Why not MCP?
+### 🔌 Why not MCP?
 
 SubAgent's core need is "batch dispatch + parallel execution + result collection". Bash's stateless process model is a perfect fit. MCP is better suited for real-time interactive tool calls with bidirectional streaming.
 
-### Auth Error Detection
+### 🛡️ Auth Error Detection
 
 All `*-ctl.sh` scripts include built-in `check_auth_errors` that scans output for keywords like `auth`, `unauthorized`, `401`, `403`, `timeout`, `ECONNREFUSED`. On match: immediately kill the task, mark as `failed`, return actionable error JSON.
 
 ---
 
-## Project Structure
+## 🗂️ Project Structure
 
 ```
 subagent-cli/
@@ -298,7 +298,7 @@ subagent-cli/
 
 ---
 
-## Adding a New CLI
+## ➕ Adding a New CLI
 
 ```bash
 # 1. Recon: find non-interactive mode and output format flags
@@ -314,6 +314,6 @@ See `SKILL.md` for the full workflow.
 
 ---
 
-## License
+## 📄 License
 
 MIT
